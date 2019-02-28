@@ -12,7 +12,7 @@ namespace DijsktraAlgorithm
         {
             int[,] graph = new int[5,5] { {0,5,10,0,0},
                                           {0,0,3,9,2},
-                                          {0,2,0,0,1},
+                                          {0,2,0,1,0},
                                           {0,0,0,0,4},
                                           {7,0,0,6,0}};
             int startIndex = 0;
@@ -24,13 +24,15 @@ namespace DijsktraAlgorithm
                 Console.WriteLine("{0}: {1}",i,result[i]);
             }
 
+            Console.ReadKey();
+
         }
 
         static int[] findPath(int startIndex, int[,] graph)
         {
             int[] result = new int[graph.GetLength(0)];
             List<int> knownVerticles = new List<int>();
-            int currentVerticle = startIndex;
+            int currentVertex = startIndex, nextVertex = 0;
 
             List<int> verticles = new List<int>();
             for (int i = 0; i < graph.GetLength(0); i++)
@@ -38,37 +40,42 @@ namespace DijsktraAlgorithm
                 verticles.Add(i);
             }
 
-            knownVerticles.Add(startIndex);
-            verticles.Remove(startIndex);
-            ratePathFromVerticle(graph, result, startIndex);
-
             while (verticles.Count > 0)
             {
-                List<int> tmp = new List<int>();
-                for (int i = 0; i < graph.GetLength(0); i++)
-                {
-                    if ((int)graph.GetValue(currentVerticle,i) > 0)
-                    {
-                        tmp.Add((int)graph.GetValue(currentVerticle, i));
-                    }
-                }
+                int min = int.MaxValue;
 
-                for (int i = currentVerticle; i == currentVerticle; i--)
+                for (int i = currentVertex; i == currentVertex; i--)
                 {
-                    for (int j = 0; j < graph.GetLength(0); j++)
+                    for (int j = 1; j < graph.GetLength(0); j++)
                     {
-                        if (graph[i, j] == tmp.Min())
+                        if (graph[i, j] > 0 && graph[i, j] + result[currentVertex] < min)
                         {
-                            knownVerticles.Add(j);
-                            verticles.Remove(j);
-                            currentVerticle = j;
-                            break;
+                            min = graph[i, j] + result[currentVertex];
+                            nextVertex = j;
                         }
                     }
+
+                    if (currentVertex != 0)
+                    {
+                        if(verticles.IndexOf(currentVertex) == -1)
+                        {
+                            nextVertex = verticles[0];
+                        }
+                        knownVerticles.Add(currentVertex);
+                        verticles.Remove(currentVertex);
+                        i = 0;
+                    }
+                    else
+                    {
+                        knownVerticles.Add(0);
+                        verticles.Remove(0);
+                    }
                 }
 
-                ratePathFromVerticle(graph, result, currentVerticle);
+                ratePathFromVerticle(graph, result, currentVertex);
+                currentVertex = nextVertex;
             }
+
             return result;
         }
 
