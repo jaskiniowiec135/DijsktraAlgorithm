@@ -1,0 +1,7 @@
+C:\Users\Jaskiniowiec\source\repos\DijsktraAlgorithm\DijsktraAlgorithm\bin\Debug\DijsktraAlgorithm.exe.config
+C:\Users\Jaskiniowiec\source\repos\DijsktraAlgorithm\DijsktraAlgorithm\bin\Debug\DijsktraAlgorithm.exe
+C:\Users\Jaskiniowiec\source\repos\DijsktraAlgorithm\DijsktraAlgorithm\bin\Debug\DijsktraAlgorithm.pdb
+C:\Users\Jaskiniowiec\source\repos\DijsktraAlgorithm\DijsktraAlgorithm\obj\Debug\DijsktraAlgorithm.csprojAssemblyReference.cache
+C:\Users\Jaskiniowiec\source\repos\DijsktraAlgorithm\DijsktraAlgorithm\obj\Debug\DijsktraAlgorithm.csproj.CoreCompileInputs.cache
+C:\Users\Jaskiniowiec\source\repos\DijsktraAlgorithm\DijsktraAlgorithm\obj\Debug\DijsktraAlgorithm.exe
+C:\Users\Jaskiniowiec\source\repos\DijsktraAlgorithm\DijsktraAlgorithm\obj\Debug\DijsktraAlgorithm.pdb
