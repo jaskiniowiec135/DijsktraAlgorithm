@@ -25,20 +25,18 @@ namespace DijsktraAlgorithm
                                               {0,0,0,0,0,0,0,2,0},
                                               {0,0,0,0,0,3,5,0,6},
                                               {0,0,12,0,0,0,0,0,0} };
-            int startIndex = 1;
-            int[] result = findPath(startIndex, graphToo);
+            int startIndex = 1, endIndex = 7;
+            int[] result = findPath(startIndex,endIndex, graphToo);
 
-            Console.WriteLine("Odległość od wierzchołka {0} do danych wierzchołków wynosi: ", startIndex);
+            Console.WriteLine("\nOdległość od wierzchołka {0} do danych wierzchołków wynosi: ", startIndex);
             for (int i = 0; i < result.Length; i++)
             {
                 Console.WriteLine("{0}: {1}",i,result[i]);
             }
-
             Console.ReadKey();
-
         }
 
-        static int[] findPath(int startIndex, int[,] graph)
+        static int[] findPath(int startIndex, int endIndex, int[,] graph)
         {
             int[] result = new int[graph.GetLength(0)];
             int[] lastVertex = new int[graph.GetLength(0)];
@@ -97,30 +95,30 @@ namespace DijsktraAlgorithm
                 currentVertex = nextVertex;
             }
 
+
+            printPath(startIndex, endIndex, lastVertex);
+
             return result;
         }
 
-        static void ratePathFromVerticle(int[,] graph, int[] pathRates, int currVert)
+        static void printPath(int startIndex, int endIndex, int[] lastVertex)
         {
-            for (int i = currVert; i == currVert; i--)
+            List<int> path = new List<int>();
+            int tmp = endIndex;
+            while (tmp != startIndex)
             {
-                for (int j = 1; j < graph.GetLength(0); j++)
-                {
-                    if(graph[i,j] > 0)
-                    {
-                        if(currVert != 0)
-                        {
-                            if(graph[i,j] + pathRates[currVert] < pathRates[j]||pathRates[j] == 0)
-                            {
-                                pathRates[j] = graph[i, j] + pathRates[currVert];
-                            }
-                        }
-                        else
-                        {
-                            pathRates[j] = graph[i, j];
-                        }
-                    }
-                }
+                path.Add(tmp);
+                tmp = lastVertex[tmp];
+            }
+
+            path.Add(startIndex);
+            path.Reverse();
+
+            Console.WriteLine("Najlepsza trasa między wierzchołkami {0} i {1} przechodzi przez wierzchołki: ", startIndex, endIndex);
+
+            for (int i = 0; i < path.Count; i++)
+            {
+                Console.WriteLine(path[i].ToString());
             }
         }
     }
