@@ -18,21 +18,52 @@ namespace DijsktraAlgorithm
 
             int[,] graphToo = new int[9, 9] { {0,4,9,0,7,0,0,10,0},
                                               {0,0,4,5,0,4,0,0,0},
-                                              {0,0,0,0,0,8,0,0,0},
+                                              {0,0,0,0,2,8,0,0,0},
                                               {3,0,0,0,2,0,4,0,0},
-                                              {0,0,0,0,0,7,4,5,0},
+                                              {0,6,0,0,0,7,4,5,0},
                                               {0,0,6,0,0,0,0,0,8},
-                                              {0,0,0,0,0,0,0,2,0},
+                                              {0,0,0,6,0,0,0,2,0},
                                               {0,0,0,0,0,3,5,0,6},
-                                              {0,0,12,0,0,0,0,0,0} };
-            int startIndex = 1, endIndex = 7;
-            int[] result = findPath(startIndex,endIndex, graphToo);
+                                              {0,0,12,0,0,0,0,0,0}};
+            int startIndex = 2, endIndex = 4;
+            int[] result = findPath(startIndex, endIndex, graphToo);
+
+            //for (int i = 0; i < graphToo.GetLength(0); i++)
+            //{
+            //    bool ok = true;
+            //    startIndex = i;
+            //    endIndex = i;
+            //    result = findPath(startIndex, endIndex, graphToo);
+
+            //    for (int j = 0; j < graphToo.GetLength(0); j++)
+            //    {
+            //        if (j != i)
+            //        {
+            //            if (result[j] == 0)
+            //            {
+            //                ok = false;
+            //            }
+            //        }
+            //    }
+
+            //    if (ok == true)
+            //    {
+            //        Console.WriteLine("Z indeksu {0} można dotrzeć do każdego wierzchołka.", i);
+            //    }
+            //    else
+            //    {
+            //        Console.WriteLine("Coś nie działa z indeksem {0}", i);
+            //    }
+            //}
 
             Console.WriteLine("\nOdległość od wierzchołka {0} do danych wierzchołków wynosi: ", startIndex);
             for (int i = 0; i < result.Length; i++)
             {
-                Console.WriteLine("{0}: {1}",i,result[i]);
+                Console.WriteLine("{0}: {1}", i, result[i]);
             }
+
+
+            Console.WriteLine("Done.");
             Console.ReadKey();
         }
 
@@ -49,7 +80,7 @@ namespace DijsktraAlgorithm
                 verticles.Add(i);
             }
 
-            while (verticles.Count > 0)
+            while (verticles.Count > 1)
             {
                 int min = int.MaxValue;
 
@@ -72,8 +103,7 @@ namespace DijsktraAlgorithm
                             }
 
 
-                            //TODO rozbić na mniejsze ify + warunek z b do e do a
-                            if (result[j] < min && j != lastVertex[currentVertex] && verticles.IndexOf(j) != -1)
+                            if (result[j] < min && result[j] >= graph[i,j] + result[currentVertex] && j != lastVertex[currentVertex] && verticles.IndexOf(j) != -1)
                             {
                                 min = graph[i, j] + result[currentVertex];
                                 if (min <= result[j])
@@ -94,7 +124,6 @@ namespace DijsktraAlgorithm
                 }
                 currentVertex = nextVertex;
             }
-
 
             printPath(startIndex, endIndex, lastVertex);
 
