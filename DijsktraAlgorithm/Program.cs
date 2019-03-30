@@ -25,49 +25,24 @@ namespace DijsktraAlgorithm
                                               {0,0,0,6,0,0,0,2,0},
                                               {0,0,0,0,0,3,5,0,6},
                                               {0,0,12,0,0,0,0,0,0}};
+
             int startIndex = 2, endIndex = 4;
-            int[] result = findPath(startIndex, endIndex, graphToo);
+            int[] result;
 
-            //for (int i = 0; i < graphToo.GetLength(0); i++)
-            //{
-            //    bool ok = true;
-            //    startIndex = i;
-            //    endIndex = i;
-            //    result = findPath(startIndex, endIndex, graphToo);
+            result = findPath(startIndex, endIndex, graphToo,true);
 
-            //    for (int j = 0; j < graphToo.GetLength(0); j++)
-            //    {
-            //        if (j != i)
-            //        {
-            //            if (result[j] == 0)
-            //            {
-            //                ok = false;
-            //            }
-            //        }
-            //    }
-
-            //    if (ok == true)
-            //    {
-            //        Console.WriteLine("Z indeksu {0} można dotrzeć do każdego wierzchołka.", i);
-            //    }
-            //    else
-            //    {
-            //        Console.WriteLine("Coś nie działa z indeksem {0}", i);
-            //    }
-            //}
+            checkGraph(startIndex, endIndex, result, graphToo, false);
 
             Console.WriteLine("\nOdległość od wierzchołka {0} do danych wierzchołków wynosi: ", startIndex);
             for (int i = 0; i < result.Length; i++)
             {
                 Console.WriteLine("{0}: {1}", i, result[i]);
             }
-
-
             Console.WriteLine("Done.");
             Console.ReadKey();
         }
 
-        static int[] findPath(int startIndex, int endIndex, int[,] graph)
+        static int[] findPath(int startIndex, int endIndex, int[,] graph, bool print)
         {
             int[] result = new int[graph.GetLength(0)];
             int[] lastVertex = new int[graph.GetLength(0)];
@@ -125,7 +100,10 @@ namespace DijsktraAlgorithm
                 currentVertex = nextVertex;
             }
 
-            printPath(startIndex, endIndex, lastVertex);
+            if (print == true)
+            {
+                printPath(startIndex, endIndex, lastVertex);
+            }
 
             return result;
         }
@@ -148,6 +126,37 @@ namespace DijsktraAlgorithm
             for (int i = 0; i < path.Count; i++)
             {
                 Console.WriteLine(path[i].ToString());
+            }
+        }
+
+        static void checkGraph(int startIndex, int endIndex, int[] result, int[,] graph, bool print)
+        {
+            for (int i = 0; i < graph.GetLength(0); i++)
+            {
+                bool ok = true;
+                startIndex = i;
+                endIndex = i;
+                result = findPath(startIndex, endIndex, graph, print);
+
+                for (int j = 0; j < graph.GetLength(0); j++)
+                {
+                    if (j != i)
+                    {
+                        if (result[j] == 0)
+                        {
+                            ok = false;
+                        }
+                    }
+                }
+
+                if (ok == true)
+                {
+                    Console.WriteLine("Z indeksu {0} można dotrzeć do każdego wierzchołka.", i);
+                }
+                else
+                {
+                    Console.WriteLine("Coś nie działa z indeksem {0}", i);
+                }
             }
         }
     }
