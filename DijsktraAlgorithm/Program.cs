@@ -8,9 +8,8 @@ namespace DijsktraAlgorithm
 {
     class Program
     {
-        static int[,] currentGraph;
-        static int[] currentTerrain;
         static int[] lastVertex;
+        static Random r = new Random();
 
         static void Main(string[] args)
         {
@@ -35,32 +34,93 @@ namespace DijsktraAlgorithm
 
             int[] secondTerrain = { 0, 1, 2, 0, 1, 1, 0, 0, 0 };
 
-            int startIndex = 0, endIndex = 2;
-            currentGraph = firstGraph;
-            currentTerrain = firstTerrain;
-            int[] path;
-            bool print = true;
+            int startIndex = 0, endIndex = 3;
+            int [,] currentGraph = secondGraph;
+            int[] currentTerrain = secondTerrain;
+            List<int[]> paths = new List<int[]>();
+            List<int[]> vertexes = new List<int[]>();
+            List<int> endIndexes = new List<int>();
+            int sumOfPaths = 0, selectedPath = 0;
 
             double skipPropability = currentGraph.GetLength(0) / 10d;
             skipPropability =  Math.Round(skipPropability, MidpointRounding.AwayFromZero);
 
-            //currentGraph = prepareTerrain(currentGraph, currentTerrain);
+            currentGraph = prepareTerrain(currentGraph, currentTerrain);
 
-            //currentGraph = randomizeGraph(currentGraph, skipPropability, startIndex, ref endIndex);
-
-            path = findPath(startIndex, endIndex, currentGraph);
-
-            if(print == true)
+            int originEndIndex = endIndex;
+            
+            for (int i = 0; i < currentTerrain.Count() * 6; i++)
             {
-                printPath(startIndex, endIndex, path);
+                endIndex = originEndIndex;
+                int[,] tmpGraph = currentGraph;
+                bool samePath = true;
+                int[] path;
+
+                tmpGraph = randomizeGraph(tmpGraph, skipPropability, startIndex, ref endIndex);
+                path = (findPath(startIndex, endIndex, tmpGraph));
+
+                if(paths.Count < 1)
+                {
+                    samePath = false;
+                }
+
+                for(int j = 0; j < paths.Count; j++)
+                {
+                    for (int k = 0; k < path.Length; k++)
+                    {
+                        if (paths[j][k] == path[k])
+                        {
+                            samePath = true;
+                        }
+                        else
+                        {
+                            samePath = false;
+                            break;
+                        }
+                    }
+                    if(samePath == true)
+                    {
+                        break;
+                    }
+                }
+
+                if (samePath == false)
+                {
+                    paths.Add(path);
+                    vertexes.Add(lastVertex);
+                    sumOfPaths += path[endIndex];
+                    endIndexes.Add(endIndex);
+                }
+
+                lastVertex = new int[currentGraph.GetLength(0)];
             }
 
-            Console.WriteLine("\nOdległość od wierzchołka {0} do danych wierzchołków wynosi: ", startIndex);
+            selectedPath = r.Next(sumOfPaths);
 
-            for (int i = 0; i < path.Length; i++)
+            for (int i = 0; i < paths.Count; i++)
             {
-                Console.WriteLine("{0}: {1}", i, path[i]);
+                if(paths[i][endIndex] >= selectedPath)
+                {
+                    selectedPath = i;
+                    break;
+                }
+                else
+                {
+                    selectedPath -= paths[i][endIndex];
+                }
             }
+
+            lastVertex = vertexes[selectedPath];
+
+            Console.WriteLine("Odległość od wierzchołka {0} do danych wierzchołków wynosi: ", startIndex);
+
+            for (int i = 0; i < paths[selectedPath].Length; i++)
+            {   
+                    Console.WriteLine("{0}: {1}", i, paths[selectedPath][i]);   
+            }
+
+            printPath(startIndex, endIndexes[selectedPath], paths[selectedPath]);
+
             Console.WriteLine("Done.");
             Console.ReadKey();
         }
@@ -167,7 +227,6 @@ namespace DijsktraAlgorithm
 
         static int[,] randomizeGraph(int[,] graph, double skip, int start,ref int end)
         {
-            Random r = new Random();
             int vertex = 0, counter = 0;
             int[,] newGraph = new int[graph.GetLength(0) - 1, graph.GetLength(0) - 1];
 
@@ -219,7 +278,6 @@ namespace DijsktraAlgorithm
                 {
                     skip--;
                     counter = 0;
-                    Console.WriteLine("Usunięty wierzchołek: " + vertex);
 
                     if (end > vertex)
                     {
