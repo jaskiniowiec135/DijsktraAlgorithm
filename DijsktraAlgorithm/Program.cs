@@ -34,9 +34,41 @@ namespace DijsktraAlgorithm
 
             int[] secondTerrain = { 0, 1, 2, 0, 1, 1, 0, 0, 0 };
 
-            int startIndex = 0, endIndex = 3;
-            int [,] currentGraph = secondGraph;
-            int[] currentTerrain = secondTerrain;
+            int[,] thirdGraph = new int[29, 29] { {0,14,10,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+                                                  {14,0,10,14,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+                                                  {10,10,8,10,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+                                                  {0,0,8,0,0,0,0,0,9,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+                                                  {0,14,0,0,0,12,0,0,0,11,10,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+                                                  {0,0,0,0,12,0,8,0,0,0,0,0,13,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+                                                  {0,0,0,0,0,8,0,0,0,0,0,0,0,0,10,0,12,0,0,0,0,0,0,0,0,0,0,0,0},
+                                                  {0,0,10,0,0,0,0,0,9,0,0,0,0,0,0,0,10,0,0,0,0,0,0,0,0,0,0,0,0},
+                                                  {0,0,0,9,0,0,0,9,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+                                                  {0,0,0,0,11,0,0,0,0,0,12,12,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+                                                  {0,0,0,0,10,0,0,0,0,12,0,10,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+                                                  {0,0,0,0,0,0,0,0,0,12,10,0,0,8,0,0,0,0,0,0,0,0,0,0,0,19,0,0,0},
+                                                  {0,0,0,0,0,13,0,0,0,0,0,0,0,8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+                                                  {0,0,0,0,0,0,0,0,0,0,0,8,8,0,0,9,0,0,0,0,0,0,0,0,0,0,0,0,0},
+                                                  {0,0,0,0,0,10,0,0,0,0,0,0,0,0,13,0,0,8,0,0,0,0,0,0,0,0,0,0,0},
+                                                  {0,0,0,0,0,0,0,0,0,0,0,0,0,9,13,0,0,0,14,0,0,0,0,0,13,13,0,0,0},
+                                                  {0,0,0,0,0,0,12,10,0,0,0,0,0,0,0,0,0,11,11,0,0,0,0,0,0,0,0,0,0},
+                                                  {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,11,0,0,10,13,0,0,0,0,0,0,0,0},
+                                                  {0,0,0,0,0,0,0,0,0,0,0,0,0,0,8,14,11,0,0,12,0,0,0,0,0,0,0,0,0},
+                                                  {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,10,12,0,0,16,9,0,0,0,0,0,0},
+                                                  {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,13,0,0,0,9,0,0,0,0,0,0,0,0},
+                                                  {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,16,9,0,0,0,0,0,0,0,16},
+                                                  {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9,0,0,0,16,0,0,0,0,8},
+                                                  {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,16,0,8,0,0,0,17},
+                                                  {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,13,0,0,0,0,0,0,0,8,0,0,10,10,0},
+                                                  {0,0,0,0,0,0,0,0,0,0,0,19,0,0,0,13,0,0,0,0,0,0,0,0,0,0,13,0,0},
+                                                  {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,10,13,0,11,0},
+                                                  {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,10,0,11,0,15},
+                                                  {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,16,8,17,0,0,0,15,0}};
+
+            int[] thirdTerrain = new int[29] { 0,0,0,0,0,0,0,0,0,5,5,5,5,5,5,5,5,5,5,5,5,5,5,10,10,10,10,10,10};
+
+            int startIndex = 0, endIndex = 13;
+            int [,] currentGraph = thirdGraph;
+            int[] currentTerrain = thirdTerrain;
             List<int[]> paths = new List<int[]>();
             List<int[]> vertexes = new List<int[]>();
             List<int> endIndexes = new List<int>();
@@ -46,18 +78,18 @@ namespace DijsktraAlgorithm
             skipPropability =  Math.Round(skipPropability, MidpointRounding.AwayFromZero);
 
             currentGraph = prepareTerrain(currentGraph, currentTerrain);
-
             int originEndIndex = endIndex;
             
-            for (int i = 0; i < currentTerrain.Count() * 6; i++)
+            for (int i = 0; i < currentTerrain.Count(); i++)
             {
                 endIndex = originEndIndex;
                 int[,] tmpGraph = currentGraph;
+                int[] tmpTerrain = currentTerrain;
                 bool samePath = true;
                 int[] path;
 
                 tmpGraph = randomizeGraph(tmpGraph, skipPropability, startIndex, ref endIndex);
-                path = (findPath(startIndex, endIndex, tmpGraph));
+                path = findPath(startIndex, endIndex, tmpGraph);
 
                 if(paths.Count < 1)
                 {
@@ -97,11 +129,14 @@ namespace DijsktraAlgorithm
 
             selectedPath = r.Next(sumOfPaths);
 
+            Console.WriteLine($"Znaleziono {paths.Count} ścieżek");
+
             for (int i = 0; i < paths.Count; i++)
             {
                 if(paths[i][endIndex] >= selectedPath)
                 {
                     selectedPath = i;
+                    Console.WriteLine($"Wybrano ścieżkę numer {i}");
                     break;
                 }
                 else
@@ -121,6 +156,8 @@ namespace DijsktraAlgorithm
 
             printPath(startIndex, endIndexes[selectedPath], paths[selectedPath]);
 
+            Console.WriteLine($"Usunięto {29 - paths[selectedPath].Length} wierzchołków");
+           
             Console.WriteLine("Done.");
             Console.ReadKey();
         }
@@ -153,76 +190,6 @@ namespace DijsktraAlgorithm
             }
 
             return graph;
-        }
-
-        static int[] findPath(int startIndex, int endIndex, int[,] graph)
-        {
-
-            int[] result = new int[graph.GetLength(0)];
-            lastVertex = new int[graph.GetLength(0)];
-            lastVertex[startIndex] = -1;
-            List<int> knownVerticles = new List<int>();
-            int currentVertex = startIndex, nextVertex = 0;
-
-            List<int> verticles = new List<int>();
-            for (int i = 0; i < graph.GetLength(0); i++)
-            {
-                verticles.Add(i);
-            }
-
-            while (verticles.Count > 1)
-            {
-                int min = int.MaxValue;
-
-                for (int i = currentVertex; i == currentVertex; i--)
-                {
-                    nextVertex = -1;
-                    for (int j = 0; j < graph.GetLength(0); j++)
-                    {
-                        if (graph[i, j] > 0 && j != startIndex) // OutOfRangeEx - when verticle 0 is removed - to solve
-                        {
-                            if (result[j] == 0)
-                            {
-                                result[j] = result[currentVertex] + graph[i, j];
-                            }
-                            else if (result[currentVertex] + graph[i, j] < result[j])
-                            {
-                                result[j] = result[currentVertex] + graph[i, j];
-                                nextVertex = j;
-                                lastVertex[j] = currentVertex;
-                            }
-
-
-                            if (result[j] < min && result[j] >= graph[i,j] + result[currentVertex] && j != lastVertex[currentVertex] && verticles.IndexOf(j) != -1)
-                            {
-                                min = graph[i, j] + result[currentVertex];
-                                if (min <= result[j])
-                                {
-                                    nextVertex = j;
-                                    lastVertex[j] = currentVertex;
-                                }
-                            }
-                        }
-                    }
-
-                    if (nextVertex == -1)
-                    {
-                        nextVertex = lastVertex[i];
-                        knownVerticles.Add(currentVertex);
-                        verticles.Remove(currentVertex);
-
-                        if (nextVertex == -1 && lastVertex[currentVertex] != startIndex)
-                        {
-                            verticles.Clear();
-                        }
-                    }
-                }
-                currentVertex = nextVertex;
-            }
-
-            lastVertex[Array.IndexOf(lastVertex, -1)] = 0;
-
-            return result;
         }
 
         static int[,] randomizeGraph(int[,] graph, double skip, int start,ref int end)
@@ -285,6 +252,7 @@ namespace DijsktraAlgorithm
                     }
 
                     graph = newGraph;
+                    newGraph = new int[newGraph.GetLength(0) - 1, newGraph.GetLength(0) - 1];
                 }
                 else
                 {
@@ -293,6 +261,75 @@ namespace DijsktraAlgorithm
             }
 
             return graph;
+        }
+
+        static int[] findPath(int startIndex, int endIndex, int[,] graph)
+        {
+            int[] result = new int[graph.GetLength(0)];
+            lastVertex = new int[graph.GetLength(0)];
+            lastVertex[startIndex] = -1;
+            List<int> knownVerticles = new List<int>();
+            int currentVertex = startIndex, nextVertex = 0;
+
+            List<int> verticles = new List<int>();
+            for (int i = 0; i < graph.GetLength(0); i++)
+            {
+                verticles.Add(i);
+            }
+
+            while (verticles.Count > 1)
+            {
+                int min = int.MaxValue;
+
+                for (int i = currentVertex; i == currentVertex; i--)
+                {
+                    nextVertex = -1;
+                    for (int j = 0; j < graph.GetLength(0); j++)
+                    {
+                        if (graph[i, j] > 0 && j != startIndex) // TODO OutOfRangeEx - when verticle 0 is removed - to solve
+                        {
+                            if (result[j] == 0)
+                            {
+                                result[j] = result[currentVertex] + graph[i, j];
+                            }
+                            else if (result[currentVertex] + graph[i, j] < result[j])
+                            {
+                                result[j] = result[currentVertex] + graph[i, j];
+                                nextVertex = j;
+                                lastVertex[j] = currentVertex;
+                            }
+
+
+                            if (result[j] < min && result[j] >= graph[i, j] + result[currentVertex] && j != lastVertex[currentVertex] && verticles.IndexOf(j) != -1)
+                            {
+                                min = graph[i, j] + result[currentVertex];
+                                if (min <= result[j])
+                                {
+                                    nextVertex = j;
+                                    lastVertex[j] = currentVertex;
+                                }
+                            }
+                        }
+                    }
+
+                    if (nextVertex == -1)
+                    {
+                        nextVertex = lastVertex[i];
+                        knownVerticles.Add(currentVertex);
+                        verticles.Remove(currentVertex);
+
+                        if (nextVertex == -1 && lastVertex[currentVertex] != startIndex)
+                        {
+                            verticles.Clear();
+                        }
+                    }
+                }
+                currentVertex = nextVertex;
+            }
+
+            lastVertex[Array.IndexOf(lastVertex, -1)] = 0;
+
+            return result;
         }
 
         static void printPath(int startIndex, int endIndex, int[] distances)
